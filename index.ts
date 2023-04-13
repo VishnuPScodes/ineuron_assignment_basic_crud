@@ -5,7 +5,7 @@ import { connect } from './src/config/db';
 import postController from './src/controllers/post.controller'
 const app =express();
 app.use(express.json());
-app.use('/posts',postController);
+app.use('/',postController);
 
 app.listen(3000,async()=>{
   try {
