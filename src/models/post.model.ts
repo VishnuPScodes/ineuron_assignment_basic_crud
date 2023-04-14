@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 export interface Post {
   title: string;
@@ -26,4 +26,4 @@ const PostSchema = new mongoose.Schema<Post>(
   }
 );
 
-export const PostModel = mongoose.model<Post>("post", PostSchema);
+export const PostModel = mongoose.model<Post>('post', PostSchema);

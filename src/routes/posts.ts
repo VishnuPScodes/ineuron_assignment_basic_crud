@@ -1,6 +1,5 @@
 import express from 'express';
 import { PostDeleteController, postGetController, postPostController, PostUpdateController } from '../controllers/posts';
-
 const router=express.Router();
 
 router.post('/',postPostController);

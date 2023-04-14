@@ -21,10 +21,8 @@ export const PostPostService = async (
 export const PostGetService = async () => {
   const data = await promiseFunction('Posts');
   if (data) {
-    console.log('data here')
-    return data;
+    return data
   } else {
-    console.log('data not here');
     const mydata = await PostModel.find().lean().exec();
     redis.set('Posts', JSON.stringify(data));
     return mydata
@@ -40,7 +38,7 @@ export const PostUpdateService = async (data:Post, id:string): Promise<Post> => 
   return UpdatedPost;
 };
 
-export const PostDeleteService = async (id: string) => {
+export const PostDeleteService = async (id: string):Promise<Post> => {
   const DeletedPost = await PostModel.findByIdAndDelete(id);
   const AllPosts = await PostModel.find().lean().exec();
   redis.set(`Post`, JSON.stringify(AllPosts));

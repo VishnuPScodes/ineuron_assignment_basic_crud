@@ -1,8 +1,9 @@
-import express, { Request, Response } from 'express';
+import { Request, Response } from 'express';
+import { Post } from '../models/post.model';
 import { PostDeleteService, PostGetService, PostPostService, PostUpdateService } from '../services/post.service';
 
 
-export const postPostController=async(req:Request,res:Response):Promise<any>=>{
+export const postPostController=async(req:Request,res:Response)=>{
    const {title,body,author}=req.body
    const response=await PostPostService(title,body,author);
    res.send(response);
@@ -10,7 +11,6 @@ export const postPostController=async(req:Request,res:Response):Promise<any>=>{
 
 export const postGetController=async(req:Request,res:Response)=>{
     const posts=await PostGetService();
-    console.log('post',posts)
     res.send(posts);
 }
 
