@@ -1,14 +1,18 @@
-
 import express from 'express';
 import cors from 'cors';
 import { connect } from './src/config/db';
-import postController from './src/controllers/post.controller'
-import {errorHandler} from './src/middlewares/errorhandler'
-const app =express();
+import postRouter from './src/routes/posts'
+import reportRouter from './src/routes/reports';
+import { errorHandler } from './src/middlewares/errorhandler';
+import dotenv from 'dotenv';
+dotenv.config();
+
+const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(errorHandler);
-app.use('/',postController);
+app.use('/posts', postRouter);
+app.use('/reports', reportRouter);
 
 app.listen(3000, async () => {
   try {

@@ -1,10 +1,9 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-
-interface Post {
-    title:string,
-    body:string,
-    author:string,
+export interface Post {
+  title: string;
+  body: string;
+  author: string;
 }
 
 const PostSchema = new mongoose.Schema<Post>(
@@ -27,4 +26,4 @@ const PostSchema = new mongoose.Schema<Post>(
   }
 );
 
-export const PostModel=mongoose.model<Post>('post',PostSchema);
+export const PostModel = mongoose.model<Post>("post", PostSchema);
