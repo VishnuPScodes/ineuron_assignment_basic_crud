@@ -1,19 +1,25 @@
 import { PostModel } from '../models/post.model';
-import redis from '../config/redis'
+import redis from '../config/redis';
 
-export const setRedis = (key:string) => {
-   return new Promise((resolve, reject) => {
-     redis.get(key, async (err: Error, post: string | null) => {
-       if (err) {
+export const setRedisData = (key: string) => {
+  return new Promise((resolve, reject) => {
+    redis.get(key, async (err: Error, post: string | null) => {
+      if (err) {
+        const data = await PostModel.find().lean().exec();
+        await redis.set('Posts', JSON.stringify(data));
+        resolve(null);
+      }
+      if (post!=='null') {
+        resolve(JSON.parse(post));
+      } else {
          const data = await PostModel.find().lean().exec();
-         redis.set('Posts', JSON.stringify(data));
-         reject(null);
-       }
-       if (post) {
-         resolve(JSON.parse(post));
-       } else {
-         reject();
-       }
-     });
-   });
- };
+        await redis.set('Posts', JSON.stringify(data));
+        resolve(null);
+      }
+    });
+  });
+};
+
+export const RemoveCache =(key:string) => {
+  redis.del(key)
+};

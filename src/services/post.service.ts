@@ -1,6 +1,6 @@
 import { Post, PostModel } from '../models/post.model';
 import redis from '../../src/config/redis';
-import { setRedis } from '../rediscontrolls/postGetRedis';
+import { setRedisData } from '../rediscontrolls/postGetRedis';
 
 export const createPost = async (
   title: string,
@@ -19,7 +19,7 @@ export const createPost = async (
 };
 
 export const getPostsService = async () => {
-  const data = await setRedis('Posts');
+  const data = await setRedisData('Posts');
   if (data) {
     return data
   } else {
