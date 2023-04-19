@@ -1,6 +1,6 @@
 import { Post, PostModel } from '../models/post.model';
 import redis from '../../src/config/redis';
-import { setRedisData } from '../rediscontrolls/postGetRedis';
+import { fetchDataRedis } from '../rediscontrolls/postGetRedis';
 
 export const createPost = async (
   title: string,
@@ -19,12 +19,18 @@ export const createPost = async (
 };
 
 export const getPostsService = async () => {
-  const data = await setRedisData('Posts');
+  const data = await fetchDataRedis('Posts');
+  console.log('data from redis',data)
   if (data) {
-    return data
+    const datatosend={
+      data,
+      redis:true
+    }
+    return datatosend
   } else {
     const mydata = await PostModel.find()
     redis.set('Posts', JSON.stringify(data));
+    console.log('finding data',data);
     return mydata
   }
 };
