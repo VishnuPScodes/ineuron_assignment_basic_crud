@@ -12,6 +12,7 @@ import {
 } from '../controllers/posts';
 const router = express.Router();
 
+// router.post('/', postExpressValidator(), validate, postPosts);
 router.post('/', postExpressValidator(), validate, postPosts);
 router.patch(
   '/:id',
@@ -21,6 +22,6 @@ router.patch(
   updatePost
 );
 router.get('/', getPosts);
-router.delete('/delete/:id', paramsValidator(), validate, deletePost);
+router.delete('/:id', paramsValidator(), validate, deletePost);
 
 export default router;

@@ -40,7 +40,8 @@ export const updatePostService = async (data:Post, id:string): Promise<Post> => 
     new: true,
   });
   const AllPost = await PostModel.find()
-  redis.set('Posts', JSON.stringify(AllPost));
+  // redis.set('Posts', JSON.stringify(AllPost));
+  // CLEAR THE CACHE
   return UpdatedPost;
 };
 
