@@ -17,26 +17,26 @@ export const createPost = async (
   redis.set('Posts', JSON.stringify(allPosts));
   return postData;
 };
-export const getPostsService = async (limit:number,page:number) => {
+export const getPostsService = async (limit: number, page: number) => {
   const data = await fetchDataRedis('Posts');
   if (data) {
-    const dataToSend={
+    const dataToSend = {
       data,
-      cached:true
+      cached: true
     }
     return dataToSend
   } else {
-    const mydata = await PostModel.find().limit(limit).skip((page-1)*limit)
-    const datatosend={
-      data:mydata,
-      redis:false
+    const mydata = await PostModel.find().limit(limit).skip((page - 1) * limit)
+    const datatosend = {
+      data: mydata,
+      cached: false
     }
-    redis.set('Posts', JSON.stringify(data),'EX',60);
+    redis.set('Posts', JSON.stringify(data), 'EX', 60);
     return datatosend
   }
 };
 
-export const updatePostService = async (data:Post, id:string): Promise<Post> => {
+export const updatePostService = async (data: Post, id: string): Promise<Post> => {
   const UpdatedPost = await PostModel.findByIdAndUpdate(id, data, {
     new: true,
   });
@@ -44,7 +44,7 @@ export const updatePostService = async (data:Post, id:string): Promise<Post> => 
   return UpdatedPost;
 };
 
-export const deletePostService = async (id: string):Promise<Post> => {
+export const deletePostService = async (id: string): Promise<Post> => {
   const DeletedPost = await PostModel.findByIdAndDelete(id);
   return DeletedPost;
 };
