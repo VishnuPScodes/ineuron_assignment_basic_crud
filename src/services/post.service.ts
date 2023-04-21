@@ -17,6 +17,7 @@ export const createPost = async (
   redis.set('Posts', JSON.stringify(allPosts));
   return postData;
 };
+
 export const getPostsService = async (limit: number, page: number) => {
   const data = await fetchDataRedis('Posts');
   if (data) {
