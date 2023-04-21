@@ -9,10 +9,9 @@ export const fetchDataRedis = (key: string) => {
         await redis.set('Posts', JSON.stringify(data));
         resolve(null);
       }
-      if (post!=='null') {
+      if (post !== 'null') {
         resolve(JSON.parse(post));
       } else {
-       
         const data = await PostModel.find()
         //redis.del('Posts');
         redis.set('Posts', JSON.stringify(data));
@@ -22,6 +21,6 @@ export const fetchDataRedis = (key: string) => {
   });
 };
 
-export const RemoveCache =(key:string) => {
+export const RemoveCache = (key: string) => {
   redis.del(key)
 };

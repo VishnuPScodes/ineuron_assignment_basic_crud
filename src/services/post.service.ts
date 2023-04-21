@@ -12,20 +12,19 @@ export const createPost = async (
     body,
     author,
   };
-  const PostData = await PostModel.create(postInfo);
-  const AllPosts = await PostModel.find()
-  redis.set('Posts', JSON.stringify(AllPosts));
-  return PostData;
+  const postData = await PostModel.create(postInfo);
+  const allPosts = await PostModel.find()
+  redis.set('Posts', JSON.stringify(allPosts));
+  return postData;
 };
-
 export const getPostsService = async (limit:number,page:number) => {
   const data = await fetchDataRedis('Posts');
   if (data) {
-    const datatosend={
+    const dataToSend={
       data,
-      redis:true
+      cached:true
     }
-    return datatosend
+    return dataToSend
   } else {
     const mydata = await PostModel.find().limit(limit).skip((page-1)*limit)
     const datatosend={
