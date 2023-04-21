@@ -12,10 +12,9 @@ export const fetchDataRedis = (key: string) => {
       if (post!=='null') {
         resolve(JSON.parse(post));
       } else {
-        console.log('post got',post);
-        const data = await PostModel.find();
+       
+        const data = await PostModel.find()
         //redis.del('Posts');
-        console.log('deleted');
         redis.set('Posts', JSON.stringify(data));
         resolve(data);
       }

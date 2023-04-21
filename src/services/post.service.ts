@@ -20,7 +20,6 @@ export const createPost = async (
 
 export const getPostsService = async (limit:number,page:number) => {
   const data = await fetchDataRedis('Posts');
-  console.log('data from redis',data)
   if (data) {
     const datatosend={
       data,
@@ -34,7 +33,6 @@ export const getPostsService = async (limit:number,page:number) => {
       redis:false
     }
     redis.set('Posts', JSON.stringify(data),'EX',60);
-    console.log('finding data',data);
     return datatosend
   }
 };
