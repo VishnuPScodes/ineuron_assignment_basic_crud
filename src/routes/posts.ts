@@ -1,5 +1,6 @@
 import express from 'express';
 import {
+  combineValidate,
   paramsValidator,
   postExpressValidator,
   validate,
@@ -11,17 +12,13 @@ import {
   updatePost,
 } from '../controllers/posts';
 const router = express.Router();
-
-// router.post('/', postExpressValidator(), validate, postPosts);
-router.post('/', postExpressValidator(), validate, postPosts);
+// router.post('/', postExpressValidator(), postPosts);
+router.post('/',combineValidate(),postPosts);
 router.patch(
   '/:id',
   paramsValidator(),
-  postExpressValidator(),
-  validate,
   updatePost
 );
 router.get('/', getPosts);
-router.delete('/:id', paramsValidator(), validate, deletePost);
-
+router.delete('/:id', paramsValidator(), deletePost);
 export default router;

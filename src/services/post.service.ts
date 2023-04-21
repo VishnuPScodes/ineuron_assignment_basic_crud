@@ -18,7 +18,7 @@ export const createPost = async (
   return PostData;
 };
 
-export const getPostsService = async () => {
+export const getPostsService = async (limit:number,page:number) => {
   const data = await fetchDataRedis('Posts');
   console.log('data from redis',data)
   if (data) {
@@ -28,10 +28,14 @@ export const getPostsService = async () => {
     }
     return datatosend
   } else {
-    const mydata = await PostModel.find()
-    redis.set('Posts', JSON.stringify(data));
+    const mydata = await PostModel.find().limit(limit).skip((page-1)*limit)
+    const datatosend={
+      data:mydata,
+      redis:false
+    }
+    redis.set('Posts', JSON.stringify(data),'EX',60);
     console.log('finding data',data);
-    return mydata
+    return datatosend
   }
 };
 
@@ -39,15 +43,11 @@ export const updatePostService = async (data:Post, id:string): Promise<Post> => 
   const UpdatedPost = await PostModel.findByIdAndUpdate(id, data, {
     new: true,
   });
-  const AllPost = await PostModel.find()
-  // redis.set('Posts', JSON.stringify(AllPost));
-  // CLEAR THE CACHE
+  redis.del('Posts');
   return UpdatedPost;
 };
 
 export const deletePostService = async (id: string):Promise<Post> => {
   const DeletedPost = await PostModel.findByIdAndDelete(id);
-  const AllPosts = await PostModel.find()
-  redis.set(`Posts`, JSON.stringify(AllPosts));
   return DeletedPost;
 };
