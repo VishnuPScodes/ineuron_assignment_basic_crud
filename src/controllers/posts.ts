@@ -14,9 +14,9 @@ export const postPosts = async (req: Request, res: Response) => {
 };
 
 export const getPosts = async (req: Request, res: Response) => {
-  const limit=5
-  const page = Number(req.query.page) |1;
-  const posts = await getPostsService(limit,page);
+  const limit = 5
+  const page = Number(req.query.page) | 1;
+  const posts = await getPostsService(limit, page);
   res.send(posts);
 };
 
