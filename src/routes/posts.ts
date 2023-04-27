@@ -1,7 +1,7 @@
 import express from 'express';
 import {
-  combineValidate,
-  paramsValidator,
+  paramsValidator1,
+  postExpressValidator
 } from '../middlewares/expressvalidators';
 import {
   deletePost,
@@ -11,12 +11,13 @@ import {
 } from '../controllers/posts';
 const router = express.Router();
 // router.post('/', postExpressValidator(), postPosts);
-router.post('/', combineValidate(), postPosts);
+router.post('/', postExpressValidator, postPosts);
 router.patch(
   '/:id',
-  paramsValidator(),
+  paramsValidator1,
   updatePost
 );
+
 router.get('/', getPosts);
-router.delete('/:id', paramsValidator(), deletePost);
+router.delete('/:id', paramsValidator1, deletePost);
 export default router;

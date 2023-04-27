@@ -14,7 +14,7 @@ app.use(errorHandler);
 app.use('/posts', postRouter);
 app.use('/reports', reportRouter);
 
-app.listen(3000, async () => {
+app.listen(3005, async () => {
   try {
     await connect();
     console.log('listening to the port 3000');
